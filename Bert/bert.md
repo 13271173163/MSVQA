@@ -8,11 +8,11 @@ BERT的网络架构使用的是《Attention is all you need》中提出的多层
 
 下图展示的是BERT的总体结构图，多个Transformer Encoder一层一层地堆叠起来，就组装成了BERT了，在论文中，作者分别用12层和24层Transformer Encoder组装了两套BERT模型，两套模型的参数总数分别为110M和340M。
 
-![model](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\model.webp)
+![model](./图片资料/model.webp)
 
 BERT的主要内容可以用下面的思维导图进行概括：
 
-![思维导图](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\思维导图.webp)
+![思维导图](./图片资料/思维导图.webp)
 
 BERT是用了Transformer的encoder侧的网络，encoder中的Self-attention机制在编码一个token的时候同时利用了其上下文的token，其中‘同时利用上下文’即为双向的体现，而并非想Bi-LSTM那样把句子倒序输入一遍。在BERT之前是GPT，GPT使用的是Transformer的decoder侧的网络，GPT是一个单向语言模型的预训练过程，更适用于文本生成，通过前文去预测当前的字。
 
@@ -20,7 +20,7 @@ BERT是用了Transformer的encoder侧的网络，encoder中的Self-attention机�
 
 Embedding是由Embedding求和组成：
 
-![Embedding](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Embedding.webp)
+![Embedding](./图片资料/Embedding.webp)
 
 #### 2.1.1 Token Embeddings
 
@@ -32,7 +32,7 @@ Token Embeddings是词向量，第一个单词是CLS标志，可以用于之后�
 
 举例：假如输入文本 ”I like dog“。下图则为 Token Embeddings 层实现过程。输入文本在送入 Token Embeddings 层之前要先进性 tokenization 处理，且两个特殊的 Token 会插入在文本开头 [CLS] 和结尾 [SEP]。[CLS]表示该特征用于分类模型，对非分类模型，该符号可以省去。[SEP]表示分句符号，用于断开输入语料中的两个句子。例子中 5 个Token 会被转换成一个 (6, 768) 的矩阵或 (1, 6, 768) 的张量。
 
-![Token example](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Token example.webp)
+![Token example](./图片资料/Token example.webp)
 
 #### 2.1.2 Segment Embedding
 
@@ -42,7 +42,7 @@ Bert 能够处理句子对的分类任务，这类任务就是判断两个文本
 
 Segement Embeddings 层有两种向量表示，前一个向量是把 0 赋值给第一个句子的各个 Token，后一个向量是把1赋值给第二个句子的各个 Token，问答系统等任务要预测下一句，因此输入是有关联的句子。而如果文本分类只有一个句子的话，那么 Segement embeddings 就全部是 0。
 
-![Segment Embedding](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Segment Embedding.webp)
+![Segment Embedding](./图片资料/Segment Embedding.webp)
 
 #### 2.1.3 Position Embedding
 
@@ -52,7 +52,7 @@ Position Embeddings和之前文章中的Transformer不一样，不是三角函�
 
 在 RNN 中，第二个 ”I“ 和 第一个 ”I“ 表达的意义不一样，因为它们的隐状态不一样。对第二个 ”I“ 来说，隐状态经过 ”I think therefore“ 三个词，包含了前面三个词的信息，而第一个 ”I“ 只是一个初始值。因此，RNN 的隐状态保证在不同位置上相同的词有不同的输出向量表示。
 
-![RNN](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\RNN.webp)
+![RNN](./图片资料/RNN.webp)
 
 RNN 能够让模型隐式的编码序列的顺序信息，相比之下，Transformer 的自注意力层 (Self-Attention) 对不同位置出现相同词给出的是同样的输出向量表示。尽管 Transformer 中两个 ”I“ 在不同的位置上，但是表示的向量是相同的。
 
@@ -72,7 +72,7 @@ BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可�
 
 ### 2.2Transformer Encoder
 
-![Transformer Encoder](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Transformer Encoder.webp)
+![Transformer Encoder](./图片资料/Transformer Encoder.webp)
 
 BERT是用了Transformer的encoder侧的网络，如上图的transformer的Encoder部分，关于transformer的encoder的详细介绍可以参考链接：https://paddlepedia.readthedocs.io/en/latest/index.html
 
@@ -82,7 +82,7 @@ BERT模型分为24层和12层两种，其差别就是使用transformer encoder�
 
 ### 2.3BERT的可视化
 
-![Bert的可视化](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Bert的可视化.webp)
+![Bert的可视化](./图片资料/Bert的可视化.webp)
 
 如上图将注意力看做不同的连线，它们用来连接被更新的位置（左半边）与被注意的位置（右半边）。不同的颜色分别代表相应的注意头，而线条颜色的深浅代表被注意的强度。
 
@@ -98,7 +98,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 在这种模式中，每个位置主要注意序列中的下一个词（token）。下面将看到第2层0号头的一个例子。（所选头部由顶部颜色条中突出的显示色块表示。）
 
-![注意力模式1](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式1.webp)
+![注意力模式1](./图片资料/注意力模式1.webp)
 
 左：所有词的注意力。 右：所选词的注意力权重（“i”）
 
@@ -114,7 +114,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 这个模式不像上一个那样显著。有一些注意力也分散到其他词上了，特别是[SEP]符号。与模式1一样，这与RNN 有些类似，只是这种情况下更像前向RNN。
 
-![注意力模式2](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式2.webp)
+![注意力模式2](./图片资料/注意力模式2.webp)
 
 左：所有词的注意力。 右：所选词的注意力权重（“went”）
 
@@ -122,7 +122,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 这种模式注意相同或相关的单词，包括其本身。在下面的例子中，第一次出现的“store”的大部分注意力都是针对自身和第二次出现的“store”。这种模式并不像其他一些模式那样显著，注意力会分散在许多不同的词上。
 
-![注意力模式3](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式3.webp)
+![注意力模式3](./图片资料/注意力模式3.webp)
 
 左：所有词的注意力。 右：所选词的注意权重（“store”）
 
@@ -130,7 +130,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 这种模式注意另一个句子中相同或相关的单词。例如，第二句中“store”的大部分注意力都指向第一句中的“store”。可以想象这对于下句预测任务（BERT预训练任务的一部分）特别有用，因为它有助于识别句子之间的关系。
 
-![注意力模式4](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式4.webp)
+![注意力模式4](./图片资料/注意力模式4.webp)
 
 左：所有词的注意力。 右：所选词的注意权重（“store”）
 
@@ -138,7 +138,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 这种模式似乎是更注意能预测该词的词，而不包括该词本身。在下面的例子中，“straw”的大部分注意力都集中在“##berries”上（strawberries 草莓，因为WordPiece分开了），而“##berries”的大部分注意力也都集中在“straw”上。
 
-![注意力模式5](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式5.webp)
+![注意力模式5](./图片资料/注意力模式5.webp)
 
 左：所有词的注意力。 右：所选词的注意力（“## berries”）
 
@@ -146,7 +146,7 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 在这种模式中，词语的大部分注意力都集中在分隔符[CLS]或 [SEP]上。在下面的示例中，大部分注意力都集中在两个 [SEP]符号上。这可能是模型将句子级状态传播到单个词语上的一种方式。
 
-![注意力模式6](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\注意力模式6.jpg)
+![注意力模式6](./图片资料/注意力模式6.jpg)
 
 左：所有词的注意力。 右：所选词的注意权重（“store”）
 
@@ -154,13 +154,13 @@ BERT 用 WordPiece工具来进行分词，并插入特殊的分离符（[CLS]，
 
 BERT的训练包含pre-train和fine-tune两个阶段。pre-train阶段模型是在无标注的标签数据上进行训练，fine-tune阶段，BERT模型首先是被pre-train模型参数初始化，然后所有的参数会用下游的有标注的数据进行训练。
 
-![Bert训练](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Bert训练.webp)
+![Bert训练](./图片资料/Bert训练.webp)
 
 #### 3.1BERT的预训练
 
 BERT是一个多任务模型，它的预训练（Pre-training）任务是由两个自监督任务组成，即MLM和NSP，如图所示。
 
-![bert的预训练](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\bert的预训练.webp)
+![bert的预训练](./图片资料/bert的预训练.webp)
 
 ##### 3.1.1MLM
 
@@ -221,11 +221,11 @@ BERT预训练模型最多只能输入512个词，这是因为在BERT中，Token�
 
 - - CoNLL-2003 NER：判断一个句子中的单词是不是Person，Organization，Location，Miscellaneous或者other（无命名实体）。
 
-![微调后的应用](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\微调后的应用.webp)
+![微调后的应用](./图片资料/微调后的应用.webp)
 
 ## 4：BERT,GPT,ELMO的区别
 
-![Bert gpt elmo](C:\Users\zhangwenchao\Desktop\学习\大创项目\Bert\图片资料\Bert gpt elmo.webp)
+![Bert gpt elmo](./图片资料/Bert gpt elmo.webp)
 
 如上图所示，图中的Trm代表的是Transformer层，E代表的是Token Embedding，即每一个输入的单词映射成的向量，T代表的是模型输出的每个Token的特征向量表示。
 
