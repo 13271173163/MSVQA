@@ -4,7 +4,7 @@
 
 Transformer 网络架构架构种编码器和解码器没有采用 RNN 或 CNN 等网络架构，而是采用完全依赖于注意力机制的架构。
 
-![transformer](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\transformer.webp)
+![transformer](./相册/transformer.webp)
 
 Transformer改进了RNN被人诟病的训练慢的特点，利用self-attention可以实现快速并行。
 
@@ -13,11 +13,11 @@ Transformer改进了RNN被人诟病的训练慢的特点，利用self-attention�
 Transformer主要由encoder和decoder两个部分组成。
 encoder和decoder均由6个encoder layer和decoder layer组成，称之为encoder block
 
-![transformer结构](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\transformer结构.jpg)
+![transformer结构](./相册/transformer结构.jpg)
 
 每一个encoder和decoder内部简版结构如下：
 
-![encoder和decoder内部结构](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\encoder和decoder内部结构.png)
+![encoder和decoder内部结构](./相册/encoder和decoder内部结构.png)
 
 encoder：包含两层，一个self-attention层和一个前馈神经网络，self-attention能帮助当前节点不仅仅只关注当前的词，从而可以获得上下文的语义。
 
@@ -29,17 +29,17 @@ decoder：除了encoder中提到的两层之外，还有两层中间一层attent
 然后，self-attention处理完数据后把数据送到前馈神经网络。
 最后，前馈神经网络的计算可以并行，得到的输出会输入到下一个encoder。
 
-![embedding和self-attention](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\embedding和self-attention.png)
+![embedding和self-attention](./相册/embedding和self-attention.png)
 
 ## 3.Transformer的结构
 
 Transformer的结构解析出来如下图表示，包括Input Embedding, Position Embedding, Encoder, Decoder。
 
-![Transformer_architecture](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Transformer_architecture.webp)
+![Transformer_architecture](./相册/Transformer_architecture.webp)
 
 ### 3.1Embedding
 
-![input_embedding](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\input_embedding.webp)
+![input_embedding](./相册/input_embedding.webp)
 
 字向量与位置编码的公式表示如下：X=EmbeddingLookup(X)+PositionEncoding
 
@@ -53,45 +53,45 @@ Transformer的结构解析出来如下图表示，包括Input Embedding, Positio
 
 Transformer模型种还缺少一种解释输入序列中单词顺序的方法。为了处理这个问题，transformer给encoder层和decoder层的输入添加了一个额外的向量Positional Encoding，维度和embedding的维度一样，这个向量采用了一种独特的方法来学习这个值，这个向量能决定当前词的位置，或者说一个句子中不同的词之间的距离。论文中的计算方法（利用三角函数，bert是通过学习得到位置向量）如下：
 
-![计算input和position](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\计算input和position.png)
+![计算input和position](./相册/计算input和position.png)
 
 其中，pos是指当前词在句子中的位置，i是指向量中每个值的index，可以看出，在偶数位置，使用正弦编码，在奇数位置，使用余弦编码。
 
 ### 3.2Encoder
 
-![encoder](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\encoder.webp)
+![encoder](./相册/encoder.webp)
 
 一个Transformer Encoder block的计算过程：
 
-![encoder计算公式](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\encoder计算公式.png)
+![encoder计算公式](./相册/encoder计算公式.png)
 
 #### 3.2.1自注意力机制
 
 - 首先，自注意力机制（self-attention）会计算出三个新的向量，在论文中，向量的维度是512维，我们把这三个向量分别称为Query、Key、Value，这三个向量是用embedding向量与一个矩阵相乘得到的结果，这个矩阵是随机初始化的，维度为（512，512）注意第二个维度需要和embedding的维度一样，其值在反向传播的过程中会一直进行更新，得到的这三个向量的维度是64低于embedding维度的。
 
-  ![Query Key Value](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Query Key Value.png)
+  ![Query Key Value](./相册/Query Key Value.png)
 
 - 计算self-attention的分数值，该分数值决定了当我们在某个位置encode一个词时，对输入句子的其他部分的关注程度。这个分数值的计算方法是Query与Key做点乘，以下图为例，首先我们需要针对Thinking这个词，计算出其他词对于该词的一个分数值，首先是针对于自己本身即q1·k1，然后是针对于第二个词即q1·k2
 
-![Query Key Value1](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Query Key Value1.png)
+![Query Key Value1](./相册/Query Key Value1.png)
 
 - 接下来，把点乘的结果除以一个常数，这里我们除以8，这个值一般是采用上文提到的矩阵的第一个维度的开方即64的开方8，当然也可以选择其他的值，然后把得到的结果做一个softmax的计算。得到的结果即是每个词对于当前位置的词的相关性大小，当然，当前位置的词相关性肯定会会很大
 
-  ![Query Key Value2](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Query Key Value2.png)
+  ![Query Key Value2](./相册/Query Key Value2.png)
 
 - 下一步就是把Value和softmax得到的值进行相乘，并相加，得到的结果即是self-attetion在当前节点的值。
 
-![Query Key Value3](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Query Key Value3.png)
+![Query Key Value3](./相册/Query Key Value3.png)
 
 在实际的应用场景，为了提高计算速度，我们采用的是矩阵的方式，直接计算出Query, Key, Value的矩阵，然后把embedding的值与三个矩阵直接相乘，把得到的新矩阵Q与K相乘，乘以一个常数，做softmax操作，最后乘上V矩阵：
 
-![Query Key Value4](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Query Key Value4.png)
+![Query Key Value4](./相册/Query Key Value4.png)
 
 这种通过 query 和 key 的相似性程度来确定 value 的权重分布的方法被称为scaled dot-product attention。
 
 用公式表达如下：
 
-![self-attention计算公式](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\self-attention计算公式.png)
+![self-attention计算公式](./相册/self-attention计算公式.png)
 
 #### 3.2.2Self-Attention复杂度
 
@@ -113,11 +113,11 @@ softmax就是直接计算了，时间复杂度为: O(n2)O(n2)
 
 不仅仅只初始化一组Q,K,V的矩阵，而是初始化多组，transformer是使用了8组，所以最后得到的结果是八个矩阵。
 
-![multi-head attention](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\multi-head attention.png)
+![multi-head attention](./相册/multi-head attention.png)
 
 multi-head注意力的全过程如下，首先输入句子，“Thinking Machines”,在embedding模块把句子中的每个单词变成向量X，在encoder层（一共有6个encoder层）中，除了第0层有embedding操作外，其他的层没有embedding操作；接着把X分成8个head（应该是复制八个x）
 
-![multi-head attention总体结构](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\multi-head attention总体结构.png)
+![multi-head attention总体结构](./相册/multi-head attention总体结构.png)
 
 最后得到的各个zi需要拼接起来（行数不变，列数等于原来的八倍），然后乘权重矩阵W0，得到最后的z
 
@@ -134,35 +134,35 @@ Z：（n,512）
 
 经过 self-attention 加权之后输出，也就是Attention(Q,K,V) ，然后把他们加起来做残差连接
 
-![add残差连接1](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\add残差连接1.png)
+![add残差连接1](./相册/add残差连接1.png)
 
 除了self-attention这里做残差连接外，feed forward那个地方也需要残差连接，公式类似：
 
-![add残差连接2](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\add残差连接2.png)
+![add残差连接2](./相册/add残差连接2.png)
 
 #### 3.2.6Layer Normalization
 
 Layer Normalization 的作用是把神经网络中隐藏层归一为标准正态分布，也就是独立同分布，以起到加快训练速度，加速收敛的作用 ：
 
-![Norm](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Norm.png)
+![Norm](./相册/Norm.png)
 
 #### 3.2.7Feed Forward
 
-![feed_forward](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\feed_forward.webp)
+![feed_forward](./相册/feed_forward.webp)
 
 将Multi-Head Attention得到的向量再投影到一个更大的空间（论文里将空间放大了4倍）在那个大空间里可以更方便地提取需要的信息（使用Relu激活函数），最后再投影回token向量原来的空间
 
-![Feed Forward](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Feed Forward.png)
+![Feed Forward](./相册/Feed Forward.png)
 
 ### 3.3Decoder
 
-![decoder](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\decoder.webp)
+![decoder](./相册/decoder.webp)
 
 和 Encoder 一样，上面三个部分的每一个部分，都有一个残差连接，后接一个 Layer Normalization。
 
 下面会介绍Decoder的Masked Self-Attention和Encoder-Decoder Attention两部分，其结构图如下图所示
 
-![decoder attention](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\decoder attention.png)
+![decoder attention](./相册/decoder attention.png)
 
 #### 3.3.1Masked Self-Attention
 
@@ -178,11 +178,11 @@ Mask 非常简单，首先生成一个下三角全 0，上三角全为负无穷�
 
  其实这一部分的计算流程和前面 Masked Self-Attention 很相似，结构也一摸一样，唯一不同的是这里的K,V为 Encoder 的输出，Q为 Decoder 中 Masked Self-Attention 的输出
 
-![Masked Encoder-Decoder Attention](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Masked Encoder-Decoder Attention.png)
+![Masked Encoder-Decoder Attention](./相册/Masked Encoder-Decoder Attention.png)
 
 #### 3.3.3Decoder的解码过程
 
-![Decoder的解码](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\Decoder的解码.gif)
+![Decoder的解码](./相册/Decoder的解码.gif)
 
 ### 3.4Transformer的最后一层和Softmax
 
@@ -190,7 +190,7 @@ Mask 非常简单，首先生成一个下三角全 0，上三角全为负无穷�
 
 softmax层将这些分数转换为概率（全部为正值，总和为1.0）。选择概率最高的单元，并生成与其关联的单词作为此时间步的输出。如图softmax的输出。
 
-![linear_softmax](C:\Users\zhangwenchao\Desktop\学习\大创项目\Transformer\相册\linear_softmax.webp)
+![linear_softmax](./相册/linear_softmax.webp)
 
 ### 3.5了解：Transformer的权重共享
 
