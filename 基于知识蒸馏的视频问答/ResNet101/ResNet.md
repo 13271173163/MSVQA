@@ -4,13 +4,13 @@
 
 把一个普通网络（**Plain network**）变成**ResNet**的方法是加上跳跃连接，如同下面这张图，每两层增加一个捷径，构成一个残差块，5个残差块连接在一起构成一个残差网络。
 
-![6077958a616425d76284cecb43c2f458](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\6077958a616425d76284cecb43c2f458.png)
+![6077958a616425d76284cecb43c2f458](./ResNet图片/6077958a616425d76284cecb43c2f458.png)
 
 如果我们使用标准优化算法训练一个普通网络，比如说梯度下降法，没有加上残差，凭经验会发现随着网络深度的加深，训练错误会先减少，然后增多。（尽管理论上，随着网络深度的加深，应该训练得越来越好才对）
 
 **ResNets**确实在训练深度网络方面非常有效，它确实有助于解决梯度消失和梯度爆炸问题，让我们在训练更深网络的同时，又能保证良好的性能。
 
-![70062fa97916ab79c7ad37282ba1a5f4](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\70062fa97916ab79c7ad37282ba1a5f4.png)
+![70062fa97916ab79c7ad37282ba1a5f4](./ResNet图片/70062fa97916ab79c7ad37282ba1a5f4.png)
 
 ## 论文
 
@@ -18,13 +18,13 @@
 
 网络深度十分重要，然而主流的“深层”网络（只）包含16到30层。
 
-![7780459-fig-1-source-small](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\7780459-fig-1-source-small.gif)
+![7780459-fig-1-source-small](./ResNet图片/7780459-fig-1-source-small.gif)
 
 如图，一个困境是对于朴素的神经网络，当深度到达一定程度时，更深的网络反而误差更大。原因来自于梯度消失与梯度爆炸。
 
 **ResNet**希望对于一个更深的网络，其误差要比浅层版本要低。
 
-![7780459-fig-2-source-large](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\7780459-fig-2-source-large.gif)
+![7780459-fig-2-source-large](./ResNet图片/7780459-fig-2-source-large.gif)
 
 这是一个基本模块，ResNet由这种基本模块堆叠构成。
 
@@ -57,7 +57,7 @@
 
 作者建议只在使用维度匹配时加入参数W2，因为实验证明不加参数W2性能已经足够。
 
-![7780459-fig-3-source-small](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\7780459-fig-3-source-small.gif)
+![7780459-fig-3-source-small](./ResNet图片/7780459-fig-3-source-small.gif)
 
 如上图，分别是VGG-19，朴素网络与残差网络。注意虽然看上去VGG-19更简单，残差网络的参数量是更少的。
 
@@ -76,6 +76,6 @@
 
 为了训练经济考虑（在有限的计算资源下缩短训练时间），论文作者引入了瓶颈层。如下图右侧，两个1x1的卷积层负责降维和升维，所以留给3x3卷积层计算的数据可以变少。
 
-![7780459-fig-5-source-large](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNet101\ResNet图片\7780459-fig-5-source-large.gif)
+![7780459-fig-5-source-large](./ResNet图片/7780459-fig-5-source-large.gif)
 
 注意引入瓶颈层会使准确率下降（原因与朴素网络相同），引入的理由只是训练经济考虑。
