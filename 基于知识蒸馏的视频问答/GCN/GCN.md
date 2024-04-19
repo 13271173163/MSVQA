@@ -10,11 +10,11 @@ GCN精妙地设计了一种从图数据中提取特征的方法，从而让我�
 
 这里的**图数据**指的不是图片，而是这种具有图结构的数据：
 
-![548b9a04ab694448bac43ad6df6dd802](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\548b9a04ab694448bac43ad6df6dd802.jpg)
+![548b9a04ab694448bac43ad6df6dd802](./GCN图片/548b9a04ab694448bac43ad6df6dd802.jpg)
 
 就像"卷积"这个名字所指代的那样，这个想法来自于图像，之后引进到图（Graphs）中。于有固定的结构的图像相比时，图（Graphs）就复杂得多。
 
-![97f6e41a40ed4f79b94c2ce55bca302f](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\97f6e41a40ed4f79b94c2ce55bca302f.png)
+![97f6e41a40ed4f79b94c2ce55bca302f](./GCN图片/97f6e41a40ed4f79b94c2ce55bca302f.png)
 
 ## GCN算法
 
@@ -38,17 +38,17 @@ GCN精妙地设计了一种从图数据中提取特征的方法，从而让我�
 
 先假设：一个人所有朋友的工资平均值等于那个人的工资，利用社交网络（graph图）中的关联信息（edge边），我们可以得到节点的有效信息
 
-![845fd71fd6c44b7c8e6080bdacab5cbb](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\845fd71fd6c44b7c8e6080bdacab5cbb.png)
+![845fd71fd6c44b7c8e6080bdacab5cbb](./GCN图片/845fd71fd6c44b7c8e6080bdacab5cbb.png)
 
 当前节点可以用相邻节点推断出来。我们先考虑用相邻节点的加和来代表当前节点：
 
-![126a54b7c67640f9808fdcea7eee57eb](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\126a54b7c67640f9808fdcea7eee57eb.jpg)
+![126a54b7c67640f9808fdcea7eee57eb](./GCN图片/126a54b7c67640f9808fdcea7eee57eb.jpg)
 
 如果图中的边没有权重，Xj是每个节点的特征值， Aij也就是节点间的关系只能为0或1。当一个节点不是i的邻居节点时，Aij就是0。
 
 那么我们将Aij写成描述节点间关系的邻接矩阵A，就能得到：
 
-![8008cb28e9cc4fff841610a3e137c438](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\8008cb28e9cc4fff841610a3e137c438.jpg)
+![8008cb28e9cc4fff841610a3e137c438](./GCN图片/8008cb28e9cc4fff841610a3e137c438.jpg)
 
 但是没有权重显然不合适，因为假如我和马云见过一面，相互仅是认识，但是马化腾和马云是铁哥们，那么将我与马云间联系的权重和马化腾与马云间联系的权重都设为1就是不合理的，所以在处理问题时，Aij一定可以为0到1的任意值，这样才可以科学的计算我的工资水平。
 
@@ -56,7 +56,7 @@ GCN精妙地设计了一种从图数据中提取特征的方法，从而让我�
 
 所以要想准确评估他的工资，还要加上他自身的一些特征Xi。在矩阵里就是加上自连接矩阵I：
 
-![bf1ca189de4643fcafe3d92d297b3eba](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\bf1ca189de4643fcafe3d92d297b3eba.jpg)
+![bf1ca189de4643fcafe3d92d297b3eba](./GCN图片/bf1ca189de4643fcafe3d92d297b3eba.jpg)
 
 截止目前，我们已经结合节点特征，将朋友们的工资科学地进行了求和，那么接下来就需要取平均值了
 
@@ -64,7 +64,7 @@ GCN精妙地设计了一种从图数据中提取特征的方法，从而让我�
 
 所以需要求平均，求平均的公式：（这公式可能不对，理解什么意思就行了）
 
-![512881a1c99345c7956eb014100b9a4c](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\512881a1c99345c7956eb014100b9a4c.jpg)
+![512881a1c99345c7956eb014100b9a4c](./GCN图片/512881a1c99345c7956eb014100b9a4c.jpg)
 
 分母是节点个数，分子就是节点特征，然后进行求和。
 
@@ -74,7 +74,7 @@ GCN精妙地设计了一种从图数据中提取特征的方法，从而让我�
 
 而GCN中的传播公式就可以解决这个问题：（后续解释这个公式什么意思）
 
-![b0aadbe4d4fc42608ecf6e906deeedd5](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\b0aadbe4d4fc42608ecf6e906deeedd5.png)
+![b0aadbe4d4fc42608ecf6e906deeedd5](./GCN图片/b0aadbe4d4fc42608ecf6e906deeedd5.png)
 
 ## GCN的结构
 
@@ -86,11 +86,11 @@ softmax的作用是将卷积网络的输出的结果进行概率化，我直接�
 
 假设我们构造一个两层的GCN，激活函数分别采用ReLU和Softmax，则整体的正向传播的公式为：
 
-![2ad53132064e4b52b6608ba72d05030f](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\2ad53132064e4b52b6608ba72d05030f.jpg)
+![2ad53132064e4b52b6608ba72d05030f](./GCN图片/2ad53132064e4b52b6608ba72d05030f.jpg)
 
 **该模型实际是输入层+隐藏层（图卷积层，类似全连接层的作用）+SoftMax+输出层构成的，GCN模型可视化为：**
 
-![85ebf032ff5c4bb7ab512c62a215fe72](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\85ebf032ff5c4bb7ab512c62a215fe72.png)
+![85ebf032ff5c4bb7ab512c62a215fe72](./GCN图片/85ebf032ff5c4bb7ab512c62a215fe72.png)
 
 GCN输入一个图，通过若干层GCN每个node的特征从X变成了Z，但是，无论中间有多少层，node之间的连接关系，即邻接矩阵A，都是共享的。 
 
@@ -98,11 +98,11 @@ GCN输入一个图，通过若干层GCN每个node的特征从X变成了Z，但�
 
 GCN就是一个神经网络层，每一层GCN的输入都是邻接矩阵A和node的特征H，它的层与层之间的**传播方式**是：
 
-![c1c30c6941bf46ec8cc092ce89108a45](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\c1c30c6941bf46ec8cc092ce89108a45.png)
+![c1c30c6941bf46ec8cc092ce89108a45](./GCN图片/c1c30c6941bf46ec8cc092ce89108a45.png)
 
 下图中的特征矩阵x相当于公式中的H（最初的特征矩阵是给定的数据或通过tf-idf等方法转向量得到的）：
 
-![e511be2e3e874cbeb6a84fa0d69153f1](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\e511be2e3e874cbeb6a84fa0d69153f1.png)
+![e511be2e3e874cbeb6a84fa0d69153f1](./GCN图片/e511be2e3e874cbeb6a84fa0d69153f1.png)
 
 这个公式中：
 
@@ -110,7 +110,7 @@ A波浪=A+I，I是单位矩阵，相当于是无向图G的邻接矩阵加上自�
 
 如此一来消息聚合时不仅能聚合来自其他结点的消息，还能聚合结点自身的消息。
 
-![e08404c9e3a74549b74dd67ef2306f6d](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\e08404c9e3a74549b74dd67ef2306f6d.png)
+![e08404c9e3a74549b74dd67ef2306f6d](./GCN图片/e08404c9e3a74549b74dd67ef2306f6d.png)
 
 D波浪是A波浪的度矩阵（degree matrix），公式为D波浪ii=∑j A波浪（无向图里,节点的度就是节点连接的边的个数。）
 
@@ -122,15 +122,15 @@ W就是每一层模型的参数，也就是模型给节点特征乘上的权重�
 
 他们之间的运算，就是各矩阵相乘，部分内容就长这样：
 
-![bdf4241b401d46099828f488f9b8e65c](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\bdf4241b401d46099828f488f9b8e65c.png)
+![bdf4241b401d46099828f488f9b8e65c](./GCN图片/bdf4241b401d46099828f488f9b8e65c.png)
 
-![50ee079990024cdca7683d323d8db130](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\50ee079990024cdca7683d323d8db130.png)
+![50ee079990024cdca7683d323d8db130](./GCN图片/50ee079990024cdca7683d323d8db130.png)
 
 其实我们需要重点关注的就是上面画红线的部分，也就是对称归一化的拉普拉斯矩阵，拉普拉斯矩阵是对称矩阵，可以进行特征分解（谱分解）
 
-![512ca467e90f43c5846c2254d164373d](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\512ca467e90f43c5846c2254d164373d.jpg)
+![512ca467e90f43c5846c2254d164373d](./GCN图片/512ca467e90f43c5846c2254d164373d.jpg)
 
-![342830c05dcc4cc48e5a4f7c556cc554](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GCN\GCN图片\342830c05dcc4cc48e5a4f7c556cc554.jpg)
+![342830c05dcc4cc48e5a4f7c556cc554](./GCN图片/342830c05dcc4cc48e5a4f7c556cc554.jpg)
 
 回到最开始的问题，这个公式会考虑到B节点的度，那么A就不会分到B很多的特征，因为A对B来说只是万千朋友的一个，分母就变大了。
 
