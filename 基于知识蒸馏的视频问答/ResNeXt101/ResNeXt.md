@@ -6,15 +6,15 @@ ResNeXt，简单来说是ResNet与Inception网络的优化，先简单复习一�
 
 构建卷积层时，要决定过滤器的大小究竟是1×1，3×3还是5×5，或者要不要添加池化层。而**Inception**网络保留所有的过滤器和池化层输出，并把输出堆叠到一起。一个典型的**Inception**模块如下图。
 
-![inception-block](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\inception-block.png)
+![inception-block](./ResNeXt图片/inception-block.png)
 
 一个具体的**Inception模组**例子：
 
-![inception-model](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\inception-model.png)
+![inception-model](./ResNeXt图片/inception-model.png)
 
 一个**Inception网络**例子：
 
-![inception-network](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\inception-network.png)
+![inception-network](./ResNeXt图片/inception-network.png)
 
 ## 步入正题
 
@@ -34,9 +34,9 @@ VGG-nets与ResNets使用了一种构建深层网络的简单但是高效的策�
 
 我们举一个最简单的例子：神经网络中的单个“神经”，示例图片如下：
 
-![one-neuron](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\one-neuron.png)
+![one-neuron](./ResNeXt图片/one-neuron.png)
 
-![{A4E776F9-DC59-4dd7-ACD7-024F2824EF95}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\{A4E776F9-DC59-4dd7-ACD7-024F2824EF95}.png)
+![{A4E776F9-DC59-4dd7-ACD7-024F2824EF95}](./ResNeXt图片/{A4E776F9-DC59-4dd7-ACD7-024F2824EF95}.png)
 
 这是一个最简单的“split-transform-merge”结构，可以拆分成3步：
 
@@ -55,10 +55,10 @@ VGG-nets与ResNets使用了一种构建深层网络的简单但是高效的策�
 
 它与ResNet的最主要区别就是基本模块不同，两种基本模块对比如下。
 
-![basic-block](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\basic-block.png)
+![basic-block](./ResNeXt图片/basic-block.png)
 
 完整网络模型对比如下：
 
-![net](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\ResNeXt101\ResNeXt图片\net.png)
+![net](./ResNeXt图片/net.png)
 
 可以看到ResNeXt与ResNet非常像。
