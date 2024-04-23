@@ -6,7 +6,7 @@
 
 核心观点：GAT (Graph Attention Networks) 采用 Attention 机制来学习邻居节点的权重, 通过对邻居节点的加权求和来获得节点本身的表达
 
-![atttt](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\atttt.png)
+![atttt](./GAT图片/atttt.png)
 
 上图为注意力架构参考：普通注意力、Self-Attention与Multi-head Attention
 
@@ -16,7 +16,7 @@
 
 - GCN：依赖于图结构决定更新权重。
 
-  ![{4BFAE3B6-CD79-4bfb-98EA-BE96B8F47763}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\{4BFAE3B6-CD79-4bfb-98EA-BE96B8F47763}.png)
+  ![{4BFAE3B6-CD79-4bfb-98EA-BE96B8F47763}](./GAT图片/{4BFAE3B6-CD79-4bfb-98EA-BE96B8F47763}.png)
 
 - GAT：GAT是对于GCN在邻居权重分配问题上的改进。注意力通过Multi-head Attention 进行学习，相比于GCN的更新权重纯粹依赖于图结构更具有合理性。
 
@@ -52,23 +52,23 @@ GCN是处理transductive任务的一把利器（transductive任务是指：训�
 
 Attention函数的本质可以被描述为**一个查询（query）到一系列（键key-值value）对的映射。**
 
-![gatt](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\gatt.png)
+![gatt](./GAT图片/gatt.png)
 
 其中，有一个待处理的信息源Source和一个表示条件或先验信息的Query。信息源中包含多种信息，我们将每种信息都表示成键值对（Key-Value）的形式，其中Key表示信息的关键信息，Value表示该信息的具体内容。注意力机制的目标是根据Query，从信息源Source中提取与Query相关的信息，即Attention Value。
 
-![{EAE743AF-188F-4964-9F0A-767242E80915}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\{EAE743AF-188F-4964-9F0A-767242E80915}.png)
+![{EAE743AF-188F-4964-9F0A-767242E80915}](./GAT图片/{EAE743AF-188F-4964-9F0A-767242E80915}.png)
 
 上式中Query，Key，Value，Attention Value在实际计算时均可以是向量形式。相关度最直接的方法是可以取两向量的内积（用内积去表示两个向量的相关度是DNN里面常用的方法，对于两个单位向量，如果内积接近1，代表两向量接近重合，相似度就高）。
 
 ### 计算注意力系数（attention coefficient）
 
-![gat](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\gat.png)
+![gat](./GAT图片/gat.png)
 
 > 结合上图，GAT的核心思想就是针对节点 i 和节点 j，GAT首先学习了他们之间的注意力权重 aij（如左图所示），然后，基于注意力权重 a1,…,a6 来对节点 1,2,…,6 的表示 ℎ1,…,ℎ6 加权平均，进而得到节点1的表示 
 
 对于顶点 i ，有顶点自己的特征 ℎi，有它在图上邻居 Ni， 逐个计算它的邻居们和它自己之间的相似系数：
 
-![0c71dc28-accc-4716-a011-79b6f9861110](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\0c71dc28-accc-4716-a011-79b6f9861110.png)
+![0c71dc28-accc-4716-a011-79b6f9861110](./GAT图片/0c71dc28-accc-4716-a011-79b6f9861110.png)
 
 解读一下这个公式：
 
@@ -78,23 +78,23 @@ Attention函数的本质可以被描述为**一个查询（query）到一系列�
 
 有了相关系数，离注意力系数就差归一化了！其实就是用个softmax：
 
-![{E3B74CB0-5F2B-4dea-B42A-45A598417955}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\{E3B74CB0-5F2B-4dea-B42A-45A598417955}.png)
+![{E3B74CB0-5F2B-4dea-B42A-45A598417955}](./GAT图片/{E3B74CB0-5F2B-4dea-B42A-45A598417955}.png)
 
 ### 加权求和（aggregate）
 
 根据计算好的注意力系数，把特征加权求和（aggregate）一下。
 
-![297d1cb8-0177-4b54-b921-bcfad89e8891](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\297d1cb8-0177-4b54-b921-bcfad89e8891.png)
+![297d1cb8-0177-4b54-b921-bcfad89e8891](./GAT图片/297d1cb8-0177-4b54-b921-bcfad89e8891.png)
 
 
 ℎi'就是GAT输出的对于每个顶点 i 的新特征（融合了邻域信息）
 
 看着还有点单薄，可以加入多头注意力机制（multi-head attention），即对上式调用K组相互独立的注意力机制，然后将输出结果拼接在一起，当然，为了减少输出的特征向量的维度，可以将拼接操作替换成平均操作：
 
-![0c71dc28-accc-4716-a011-79b6f9861110](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\0c71dc28-accc-4716-a011-79b6f9861110.png)
+![0c71dc28-accc-4716-a011-79b6f9861110](./GAT图片/0c71dc28-accc-4716-a011-79b6f9861110.png)
 
 **多头图注意力层的优势在于能够学习多组不同的注意力机制**，使得模型可以充分考虑不同节点之间的相关性和重要性。**通过增加注意力头数K，可以进一步提高模型的表达能力。**
 
-![gatmh](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GAT\GAT图片\gatmh.png)
+![gatmh](./GAT图片/gatmh.png)
 
 到此为止，我们完成了一层GAT运算。本质上， GAT只是将原本GCN的标准化函数替换为使用注意力权重的邻居节点特征聚合函数。其余部分和普通的GCN和GNN思想相同。
