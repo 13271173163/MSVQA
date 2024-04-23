@@ -9,7 +9,7 @@ Glove结合了LSA和word2vec两者的优点。
 - LSA是一种词向量表征工具，也是基于共现矩阵，采用了基于奇异值分解SVD的矩阵分解技术对大矩阵进行降维，但是SVD计算代价太高，并且它对于所有单词的统计权重都是一致的，而glove克服了这些缺点。
 - Word2vec因为它是基于局部滑动窗口计算的，利用了局部上下文的特征，所以缺点就是没有充分利用所有的语料。
 
-![window](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\window.gif)
+![window](./GloVe图片/window.gif)
 
 Word2vec是一种有效创建词嵌入的方法，用一句比较简单的话来总结，word2vec是用一个一层的神经网络把one-hot形式的稀疏词向量映射称为一个n维(n一般为几百)的稠密向量的过程。
 
@@ -38,13 +38,13 @@ Glove的创新点在于它是一种新的词向量训练模型，并且能够在
 
 则窗口为1的共现矩阵如下：
 
-![gxjz](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\gxjz.png)
+![gxjz](./GloVe图片/gxjz.png)
 
 按照作者的描述，实验中计算的不是真正意义上的共现次数，而是共现次数和权重递减函数的乘积，从而达到距离越远的共现词对权重越低，距离越近的共现词对权重相对较大。
 
 ### 利用共现矩阵求解概率
 
-![1](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\1.png)
+![1](./GloVe图片/1.png)
 
 其中：
 
@@ -57,27 +57,27 @@ Glove的创新点在于它是一种新的词向量训练模型，并且能够在
 
 然后我们从一个语料库中拿那些词来举个例子：
 
-![glove_3](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\glove_3.png)
+![glove_3](./GloVe图片/glove_3.png)
 
 可以发现，比值P(k∣ice)/P(k∣steam)在一定程度上可以反映词汇之间的相关性，当k 与 ice 和 steam相关性比较低时，其值应该在1附近，当 k 与 ice 或者 steam 其中一个相关性比较高时，比值应该偏离1比较远。
 
 基于这样的思想，作者提出了这样一种猜想，能不能通过训练词向量，使得词向量经过某种函数计算之后可以得到上面的比值，具体如下：
 
-![{3A52792D-4FAD-420b-A53D-3608F022BA20}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{3A52792D-4FAD-420b-A53D-3608F022BA20}.png)
+![{3A52792D-4FAD-420b-A53D-3608F022BA20}](./GloVe图片/{3A52792D-4FAD-420b-A53D-3608F022BA20}.png)
 
 其中，w 是词向量，F是未知函数，通过将 F 限定为指数函数，再加入偏差项标量 b，经过变换，构建词向量（word vector）和共现矩阵（Co-occurrence Matrix）之间的近似关系：
 
-![{74603316-2D1E-49e5-983A-A71F19809DA4}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{74603316-2D1E-49e5-983A-A71F19809DA4}.png)
+![{74603316-2D1E-49e5-983A-A71F19809DA4}](./GloVe图片/{74603316-2D1E-49e5-983A-A71F19809DA4}.png)
 
 ### 损失函数
 
 此时模型的目标就转化为通过学习词向量的表示，使得上式两边尽量接近，因此，可以通过计算两者之间的平方差来作为目标函数，即：
 
-![{B1E86D44-CA23-4229-BAD1-3DAEA5512308}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{B1E86D44-CA23-4229-BAD1-3DAEA5512308}.png)
+![{B1E86D44-CA23-4229-BAD1-3DAEA5512308}](./GloVe图片/{B1E86D44-CA23-4229-BAD1-3DAEA5512308}.png)
 
 但是这样的目标函数有一个缺点，就是对所有的共现词汇都是采用同样的权重，因此，作者对目标函数进行了进一步的修正，通过语料中的词汇共现统计信息来改变他们在目标函数中的权重，具体如下：
 
-![{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}.png)
+![{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}](./GloVe图片/{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}.png)
 
 其中，f是权重函数。权重应该满足下面这些条件：
 
@@ -87,17 +87,17 @@ Glove的创新点在于它是一种新的词向量训练模型，并且能够在
 
 据此，作者选择了这个函数：
 
-![{61EB968E-DC56-4fbd-B68B-DCC05D43CC19}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{61EB968E-DC56-4fbd-B68B-DCC05D43CC19}.png)
+![{61EB968E-DC56-4fbd-B68B-DCC05D43CC19}](./GloVe图片/{61EB968E-DC56-4fbd-B68B-DCC05D43CC19}.png)
 
 作者在实验中设定 x max=100 ，并且发现 a=3/4时效果比较好，如下图：
 
-![glove_f](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\glove_f.png)
+![glove_f](./GloVe图片/glove_f.png)
 
 ## 实验
 
 虽然很多人声称GloVe是一种无监督(unsupervised learning)的学习方式（因为它确实不需要人工标注label），但其实它还是有label的，这个label就是公式中的 log(Xij)，而公式中的向量w和w~就是要不断更新/学习的参数。
 
-![{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\GloVe\GloVe图片\{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}.png)
+![{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}](./GloVe图片/{BA72660B-E5A2-4e17-BDF2-FF0EEAD679B0}.png)
 
 所以本质上它的训练方式跟监督学习的训练方法没什么不一样，都是基于梯度下降的。具体地，这篇论文里的实验是这么做的：采用了AdaGrad的梯度下降算法，对矩阵X中的所有非零元素进行随机采样，学习曲率(learning rate)设为0.05，在vector size小于300的情况下迭代了50次，其他大小的vectors上迭代了100次，直至收敛。
 
