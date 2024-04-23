@@ -11,17 +11,17 @@
 - **更新记忆**：将上一个状态值Ct−1乘以f_t，以此表达期待忘记的部分。之后将得到的值加上 i_t∗C ̃_t。这个得到的是新的状态值
 - **输出门**决定我们要输出什么， 此输出将基于当前的细胞状态。首先，通过一个sigmoid层，决定了我们要输出细胞状态的哪些部分。然后，将细胞状态通过tanh（将值规范化到-1和1之间），并将其乘以Sigmoid门的输出，至此完成了输出门决定的那些部分信息的输出。
 
-![lstm](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\LSTM_and_BiLSTM\LSTM_and_BiLSTM图片\lstm.png)
+![lstm](./LSTM_and_BiLSTM图片/lstm.png)
 
 # BiLSTM（双向长短期记忆神经网络）
 
 首先看2层的 LSTM 是如何运转的
 
-![lstm2](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\LSTM_and_BiLSTM\LSTM_and_BiLSTM图片\lstm2.jpg)
+![lstm2](./LSTM_and_BiLSTM图片/lstm2.jpg)
 
 再看1层的 BiLSTM 是如何运转的
 
-![bilstm](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\LSTM_and_BiLSTM\LSTM_and_BiLSTM图片\bilstm.png)
+![bilstm](./LSTM_and_BiLSTM图片/bilstm.png)
 
 用一个文本情感分析的例子来说明：单层的BiLSTM其实就是2个LSTM，一个正向去处理序列，一个反向去处理序列，处理完后，**两个LSTM的输出会拼接起来**。
 
@@ -33,6 +33,6 @@
 
 再看看2层的 BiLSTM 是如何运转的
 
-![bilstm2](C:\Users\zhangwenchao\Desktop\学习\大创项目\基于知识蒸馏的视频问答\LSTM_and_BiLSTM\LSTM_and_BiLSTM图片\bilstm2.png)
+![bilstm2](./LSTM_and_BiLSTM图片/bilstm2.png)
 
 其实与两层的LSTM相差不大，区别是每层多了一个反向序列的LSTM
